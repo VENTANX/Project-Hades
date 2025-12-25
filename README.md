@@ -6,16 +6,16 @@
 
 ## Overview
 
-**Project Hades** is a secure AI inference platform designed to deploy **uncensored local AI models** (via KoboldCPP) while ensuring complete data privacy. In an environment of increasing digital surveillance, Hades serves as a secure enclave for your interactions.
+**Project Hades** is a secure, decentralized AI interface designed for the modern privacy-conscious user. It solves a critical problem: **how to utilize powerful local AI models hosted on a primary machine while accessing them securely from any other device.**
 
-The system is architected for **remote accessibility without compromise**. You can host Hades on a central server and access it securely from any device—mobile or desktop—knowing that all conversations, chat logs, and API credentials are **encrypted at rest** using military-grade encryption.
+With Hades, you can run **KoboldCPP** on your high-performance desktop and connect to it from your laptop, smartphone, or tablet over the web/network. The platform ensures that despite this remote accessibility, your **conversations and data remain encrypted and completely private**. It effectively turns your local AI into a personal, secure cloud service that only you control.
 
 ## Key Features
 
--   **KoboldCPP Integration**: Seamlessly connect to local LLMs running via KoboldCPP for an unrestricted, uncensored AI experience.
--   **Secure Remote Access**: Host locally, access globally. The responsive design ensures a seamless experience on both mobile and desktop devices.
--   **Encrypted Architecture**: All sensitive data (chats, keys) is safeguarded with **Fernet (symmetric) encryption**. Even if the database is accessed, the content remains unreadable without the specific key.
--   **No Telemetry**: Zero tracking, zero external dependency. Your data never leaves your controlled environment.
+-   **Remote-Ready AI**: Host your models on one machine (e.g., a gaming rig with high VRAM) via KoboldCPP and access the Hades interface from anywhere.
+-   **Uncensored Freedom**: Designed to work seamlessly with uncensored local models. No guardrails, no corporate oversight.
+-   **Zero-Trust Encryption**: All chat history and session data are encrypted using **Fernet (symmetric) encryption**. Even if you access the platform over a network, your data stored on the host remains locked and readable only by you.
+-   **Responsive Design**: A unified UI that adapts perfectly to desktop and mobile workflows.
 
 ## Gallery
 
@@ -28,12 +28,20 @@ The system is architected for **remote accessibility without compromise**. You c
   <img src="Screenshot 2025-12-25 012400.png" width="45%" alt="Mobile View 2" />
 </div>
 
-## Technical Stack
+## Technical Architecture
+
+The system is built to bridge the gap between local compute and remote usability:
+
+1.  **AI Host**: Runs KoboldCPP (or compatible API) exposing the model.
+2.  **Hades Core**: The React + Vite frontend connects to the AI Host.
+3.  **Security Layer**: The Cryptography module ensures that persistent data is never stored in plaintext.
+
+## Stack
 
 -   **Frontend**: React, TypeScript, Vite.
--   **Backend**: Python, FastAPI, SQLAlchemy.
--   **Encryption**: Python `cryptography` (Fernet).
--   **AI Backend**: Compatible with **KoboldCPP** (and other OpenAI-compatible endpoints).
+-   **Backend**: Python, FastAPI.
+-   **Security**: Python `cryptography` (Fernet).
+-   **Integration**: KoboldCPP / OpenAI API standards.
 
 ## Getting Started
 
@@ -41,38 +49,34 @@ The system is architected for **remote accessibility without compromise**. You c
 
 -   **Python 3.8+**
 -   **Node.js 18+**
--   **KoboldCPP** (running a model of your choice)
+-   **KoboldCPP** (running on your host machine)
 
 ### Installation
 
 1.  **Clone the repository**.
+
 2.  **Backend Setup**:
     ```bash
     cd "project hades"
     pip install fastapi uvicorn sqlalchemy cryptography python-dotenv
     ```
+
 3.  **Frontend Setup**:
     ```bash
     npm install
     ```
 
-### Deployment
+### Usage Scenario: Remote Access
 
-1.  **Launch KoboldCPP**:
-    Start your KoboldCPP instance with your preferred model. Note the URL (usually `http://localhost:5001`).
+1.  **On your Host Machine:**
+    -   Launch KoboldCPP with your model. Ensure it allows network connections (e.g., `--host 0.0.0.0` if needed).
+    -   Start the Hades Backend: `python backend/main.py`.
+    -   Start the Frontend: `npm run dev -- --host` (to expose it to the network).
 
-2.  **Start Hades Backend**:
-    ```bash
-    python backend/main.py
-    ```
-
-3.  **Start Hades Interface**:
-    ```bash
-    npm run dev
-    ```
-
-4.  **Connect**:
-    Open the interface in your browser. In the settings or initial setup, point Hades to your KoboldCPP URL.
+2.  **On your Remote Device (Phone/Laptop):**
+    -   Open the browser and navigate to your Host Machine's IP address (e.g., `http://192.168.1.X:5173`).
+    -   In the Hades settings, point the "Nexus Gateway" to your KoboldCPP API URL (e.g., `http://192.168.1.X:5001`).
+    -   **Enjoy full, encrypted access to your high-powered AI from the comfort of your mobile device.**
 
 ## Disclaimer
 
