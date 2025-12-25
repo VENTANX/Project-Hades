@@ -1,0 +1,7 @@
+{
+  "name": "Project Hades",
+  "description": "A high-fidelity, secure AI interface with a Sith-inspired dark/red aesthetic, featuring encrypted chat history, custom persona, and voice command capabilities.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
